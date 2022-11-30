@@ -19,6 +19,4 @@ require (
 	golang.org/x/text v0.4.0 // indirect
 )
 
-replace (
-	github.com/envoyproxy/protoc-gen-validate => github.com/kmsli/protoc-gen-validate
-)
+replace github.com/envoyproxy/protoc-gen-validate => ./

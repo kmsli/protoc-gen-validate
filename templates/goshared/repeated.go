@@ -48,7 +48,7 @@ const repTpl = `
 			_, _ = idx, item
 			{{ if $r.GetUnique }}
 				if _, exists := {{ lookup $f "Unique" }}[{{ if isBytes $f.Type.Element }}string(item){{ else }}item{{ end }}]; exists {
-					err := {{ errIdx . "索引" "此 repeated 类型值，数组值不能重复" }}
+					err := {{ errIdx . "idx" "此 repeated 类型值，数组值不能重复" }}
 					if !all { return err }
 					errors = append(errors, err)
 				} else {

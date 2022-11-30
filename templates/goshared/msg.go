@@ -132,7 +132,7 @@ func (e {{ errname . }}) ErrorName() string { return "{{ errname . }}" }
 func (e {{ errname . }}) Error() string {
 	cause := ""
 	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+		cause = fmt.Sprintf(" | 因为: %v", e.cause)
 	}
 
 	key := ""
@@ -141,7 +141,7 @@ func (e {{ errname . }}) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %s{{ (msgTyp .) }}.%s: %s%s",
+		"无效的 %s{{ (msgTyp .) }}.%s: %s%s",
 		key,
 		e.field,
 		e.reason,

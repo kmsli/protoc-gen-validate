@@ -38,7 +38,7 @@ func rulesContext(f pgs.Field) (out RuleContext, err error) {
 	}
 
 	if out.Typ == "error" {
-		err = fmt.Errorf("unknown rule type (%T)", rules.Type)
+		err = fmt.Errorf("未知的规则类型 (%T)", rules.Type)
 	}
 
 	return
@@ -47,7 +47,7 @@ func rulesContext(f pgs.Field) (out RuleContext, err error) {
 func (ctx RuleContext) Key(name, idx string) (out RuleContext, err error) {
 	rules, ok := ctx.Rules.(*validate.MapRules)
 	if !ok {
-		err = fmt.Errorf("cannot get Key RuleContext from %T", ctx.Field)
+		err = fmt.Errorf("无法从RuleContext中获取键 %T", ctx.Field)
 		return
 	}
 
@@ -58,7 +58,7 @@ func (ctx RuleContext) Key(name, idx string) (out RuleContext, err error) {
 	out.Typ, out.Rules, out.MessageRules, _ = resolveRules(ctx.Field.Type().Key(), rules.GetKeys())
 
 	if out.Typ == "error" {
-		err = fmt.Errorf("unknown rule type (%T)", rules)
+		err = fmt.Errorf("未知的规则类型 (%T)", rules)
 	}
 
 	return
@@ -76,7 +76,7 @@ func (ctx RuleContext) Elem(name, idx string) (out RuleContext, err error) {
 	case *validate.RepeatedRules:
 		rules = r.GetItems()
 	default:
-		err = fmt.Errorf("cannot get Elem RuleContext from %T", ctx.Field)
+		err = fmt.Errorf("无法从RuleContext中获取键 %T", ctx.Field)
 		return
 	}
 
@@ -87,7 +87,7 @@ func (ctx RuleContext) Elem(name, idx string) (out RuleContext, err error) {
 	}
 
 	if out.Typ == "error" {
-		err = fmt.Errorf("unknown rule type (%T)", rules)
+		err = fmt.Errorf("未知的规则类型 (%T)", rules)
 	}
 
 	return

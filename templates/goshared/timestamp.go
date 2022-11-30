@@ -3,7 +3,7 @@ package goshared
 const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 			{{  if $r.Const }}
 				if !ts.Equal({{ tsLit $r.Const }}) {
-					err := {{ err . "value must equal " (tsStr $r.Const) }}
+					err := {{ err . "值必须等于 " (tsStr $r.Const) }}
 					if !all { return err }
 					errors = append(errors, err)
 				}
@@ -83,7 +83,7 @@ const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 					{{ end }}
 				{{ else }}
 					if ts.Sub(lte) > 0 {
-						err := {{ err . "值必须小于 or equal to " (tsStr $r.GetLte) }}
+						err := {{ err . "值必须小于或等于 " (tsStr $r.GetLte) }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
@@ -130,7 +130,7 @@ const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ end }}
 			{{ else if $r.Within }}
 				if ts.Sub(now.Add(within)) >= 0 || ts.Sub(now.Add(-within)) <= 0 {
-					err := {{ err . "value must be within " (durStr $r.GetWithin) " of now" }}
+					err := {{ err . "值必须在当前有效范围内 " (durStr $r.GetWithin) }}
 					if !all { return err }
 					errors = append(errors, err)
 				}

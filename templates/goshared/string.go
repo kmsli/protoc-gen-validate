@@ -83,7 +83,7 @@ const strTpl = `
 
 	{{ if $r.Prefix }}
 		if !strings.HasPrefix({{ accessor . }}, {{ lit $r.GetPrefix }}) {
-			err := {{ err . "value does not have prefix " (lit $r.GetPrefix) }}
+			err := {{ err . "值缺少前缀 " (lit $r.GetPrefix) }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
@@ -91,7 +91,7 @@ const strTpl = `
 
 	{{ if $r.Suffix }}
 		if !strings.HasSuffix({{ accessor . }}, {{ lit $r.GetSuffix }}) {
-			err := {{ err . "value does not have suffix " (lit $r.GetSuffix) }}
+			err := {{ err . "值缺少后缀 " (lit $r.GetSuffix) }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
@@ -99,7 +99,7 @@ const strTpl = `
 
 	{{ if $r.Contains }}
 		if !strings.Contains({{ accessor . }}, {{ lit $r.GetContains }}) {
-			err := {{ err . "value does not contain substring " (lit $r.GetContains) }}
+			err := {{ err . "值不包含子字符 " (lit $r.GetContains) }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
@@ -107,69 +107,77 @@ const strTpl = `
 
 	{{ if $r.NotContains }}
 		if strings.Contains({{ accessor . }}, {{ lit $r.GetNotContains }}) {
-			err := {{ err . "value contains substring " (lit $r.GetNotContains) }}
+			err := {{ err . "值包含子字符 " (lit $r.GetNotContains) }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
 	{{ end }}
 
 	{{ if $r.GetIp }}
-		if ip := net.ParseIP({{ accessor . }}); ip == nil {
-			err := {{ err . "value must be a valid IP address" }}
-			if !all { return err }
-			errors = append(errors, err)
+		if strings.Contains({{ accessor . }}, "/") {
+			if _, ipNet, _ := net.ParseCIDR({{ accessor . }}); ipNet == nil {
+				err := {{ err . "值必须为有效的IP网段(CIDR)" }}
+				if !all { return err }
+				errors = append(errors, err)
+			}
+		} else {
+			if ip := net.ParseIP({{ accessor . }}); ip == nil {
+				err := {{ err . "值必须为有效的IP地址" }}
+				if !all { return err }
+				errors = append(errors, err)
+			}
 		}
 	{{ else if $r.GetIpv4 }}
 		if ip := net.ParseIP({{ accessor . }}); ip == nil || ip.To4() == nil {
-			err := {{ err . "value must be a valid IPv4 address" }}
+			err := {{ err . "值必须为有效的IPv4地址" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
 	{{ else if $r.GetIpv6 }}
 		if ip := net.ParseIP({{ accessor . }}); ip == nil || ip.To4() != nil {
-			err := {{ err . "value must be a valid IPv6 address" }}
+			err := {{ err . "值必须为有效的IPv6" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
 	{{ else if $r.GetEmail }}
 		if err := m._validateEmail({{ accessor . }}); err != nil {
-			err = {{ errCause . "err" "value must be a valid email address" }}
+			err = {{ errCause . "err" "值必须为有效的邮箱地址" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
 	{{ else if $r.GetHostname }}
 		if err := m._validateHostname({{ accessor . }}); err != nil {
-			err = {{ errCause . "err" "value must be a valid hostname" }}
+			err = {{ errCause . "err" "值必须是有效的主机名" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
 	{{ else if $r.GetAddress }}
 		if err := m._validateHostname({{ accessor . }}); err != nil {
 			if ip := net.ParseIP({{ accessor . }}); ip == nil {
-				err := {{ err . "value must be a valid hostname, or ip address" }}
+				err := {{ err . "值必须是有效的主机名或ip地址" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		}
 	{{ else if $r.GetUri }}
 		if uri, err := url.Parse({{ accessor . }}); err != nil {
-			err = {{ errCause . "err" "value must be a valid URI" }}
+			err = {{ errCause . "err" "值必须是有效的URI" }}
 			if !all { return err }
 			errors = append(errors, err)
 		} else if !uri.IsAbs() {
-			err := {{ err . "value must be absolute" }}
+			err := {{ err . "值必须是绝对值" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
 	{{ else if $r.GetUriRef }}
 		if _, err := url.Parse({{ accessor . }}); err != nil {
-			err = {{ errCause . "err" "value must be a valid URI" }}
+			err = {{ errCause . "err" "值必须是有效的URI" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
 	{{ else if $r.GetUuid }}
 		if err := m._validateUuid({{ accessor . }}); err != nil {
-			err = {{ errCause . "err" "value must be a valid UUID" }}
+			err = {{ errCause . "err" "值必须是有效的UUID" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
@@ -177,7 +185,7 @@ const strTpl = `
 
 	{{ if $r.Pattern }}
 		if !{{ lookup $f "Pattern" }}.MatchString({{ accessor . }}) {
-			err := {{ err . "value does not match regex pattern " (lit $r.GetPattern) }}
+			err := {{ err . "值与正则表达式模式不匹配 " (lit $r.GetPattern) }}
 			if !all { return err }
 			errors = append(errors, err)
 		}

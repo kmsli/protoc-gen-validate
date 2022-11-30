@@ -22,7 +22,7 @@ const repTpl = `
 			}
 		{{ else }}
 			if len({{ accessor . }}) < {{ $r.GetMinItems }} {
-				err := {{ err . "值最少包含t " $r.GetMinItems " 个元素" }}
+				err := {{ err . "值最少包含 " $r.GetMinItems " 个元素" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}

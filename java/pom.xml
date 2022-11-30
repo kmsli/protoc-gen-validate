@@ -17,7 +17,7 @@
 
     <name>PGV-Java Parent</name>
     <description>Protoc plugin to generate protobuf message validators.</description>
-    <url>https://github.com/envoyproxy/protoc-gen-validate</url>
+    <url>https://github.com/kmsli/protoc-gen-validate</url>
 
     <licenses>
         <license>

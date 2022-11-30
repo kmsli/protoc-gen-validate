@@ -26,5 +26,5 @@ except ValidationFailed as err:
     # home is required.
 ```
 
-[pgv-home]: https://github.com/envoyproxy/protoc-gen-validate
-[rules-comparison]: https://github.com/envoyproxy/protoc-gen-validate/blob/main/rule_comparison.md
+[pgv-home]: https://github.com/kmsli/protoc-gen-validate
+[rules-comparison]: https://github.com/kmsli/protoc-gen-validate/blob/main/rule_comparison.md

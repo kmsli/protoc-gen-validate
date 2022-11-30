@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/envoyproxy/protoc-gen-validate/module"
+	"github.com/kmsli/protoc-gen-validate/module"
 	pgs "github.com/lyft/protoc-gen-star"
 	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
 	"google.golang.org/protobuf/types/pluginpb"

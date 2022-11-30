@@ -4,7 +4,7 @@ import (
 	"text/template"
 
 	"github.com/lyft/protoc-gen-star"
-	"github.com/envoyproxy/protoc-gen-validate/templates/goshared"
+	"github.com/kmsli/protoc-gen-validate/templates/goshared"
 )
 
 func Register(tpl *template.Template, params pgs.Parameters) {

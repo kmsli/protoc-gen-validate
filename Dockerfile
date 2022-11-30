@@ -65,7 +65,7 @@ RUN go install github.com/bazelbuild/buildtools/buildozer@${BDR_VER} \
 # the distribution we installed doesn't provide this alias
 RUN ln -s /usr/bin/python3.8 /usr/bin/python
 
-WORKDIR ${GOPATH}/src/github.com/envoyproxy/protoc-gen-validate
+WORKDIR ${GOPATH}/src/github.com/kmsli/protoc-gen-validate
 
 # python tooling for linting and uploading to PyPI
 COPY requirements.txt .

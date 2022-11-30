@@ -19,4 +19,3 @@ require (
 	golang.org/x/text v0.4.0 // indirect
 )
 
-replace github.com/envoyproxy/protoc-gen-validate => ./

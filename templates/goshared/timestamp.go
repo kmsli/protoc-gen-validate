@@ -20,13 +20,13 @@ const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ if $r.Gt }}
 					{{  if tsGt $r.GetLt $r.GetGt }}
 						if ts.Sub(gt) <= 0 || ts.Sub(lt) >= 0 {
-							err := {{ err . "value must be inside range (" (tsStr $r.GetGt) ", " (tsStr $r.GetLt) ")" }}
+							err := {{ err . "值必须在范围内 (" (tsStr $r.GetGt) ", " (tsStr $r.GetLt) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if ts.Sub(lt) >= 0 && ts.Sub(gt) <= 0 {
-							err := {{ err . "value must be outside range [" (tsStr $r.GetLt) ", " (tsStr $r.GetGt) "]" }}
+							err := {{ err . "值必须超出范围 [" (tsStr $r.GetLt) ", " (tsStr $r.GetGt) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
@@ -34,20 +34,20 @@ const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ else if $r.Gte }}
 					{{  if tsGt $r.GetLt $r.GetGte }}
 						if ts.Sub(gte) < 0 || ts.Sub(lt) >= 0 {
-							err := {{ err . "value must be inside range [" (tsStr $r.GetGte) ", " (tsStr $r.GetLt) ")" }}
+							err := {{ err . "值必须在范围内 [" (tsStr $r.GetGte) ", " (tsStr $r.GetLt) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if ts.Sub(lt) >= 0 && ts.Sub(gte) < 0 {
-							err := {{ err . "value must be outside range [" (tsStr $r.GetLt) ", " (tsStr $r.GetGte) ")" }}
+							err := {{ err . "值必须超出范围 [" (tsStr $r.GetLt) ", " (tsStr $r.GetGte) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ end }}
 				{{ else }}
 					if ts.Sub(lt) >= 0 {
-						err := {{ err . "value must be less than " (tsStr $r.GetLt) }}
+						err := {{ err . "值必须小于 " (tsStr $r.GetLt) }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
@@ -56,13 +56,13 @@ const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ if $r.Gt }}
 					{{  if tsGt $r.GetLte $r.GetGt }}
 						if ts.Sub(gt) <= 0 || ts.Sub(lte) > 0 {
-							err := {{ err . "value must be inside range (" (tsStr $r.GetGt) ", " (tsStr $r.GetLte) "]" }}
+							err := {{ err . "值必须在范围内 (" (tsStr $r.GetGt) ", " (tsStr $r.GetLte) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if ts.Sub(lte) > 0 && ts.Sub(gt) <= 0 {
-							err := {{ err . "value must be outside range (" (tsStr $r.GetLte) ", " (tsStr $r.GetGt) "]" }}
+							err := {{ err . "值必须超出范围 (" (tsStr $r.GetLte) ", " (tsStr $r.GetGt) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
@@ -70,46 +70,46 @@ const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ else if $r.Gte }}
 					{{ if tsGt $r.GetLte $r.GetGte }}
 						if ts.Sub(gte) < 0 || ts.Sub(lte) > 0 {
-							err := {{ err . "value must be inside range [" (tsStr $r.GetGte) ", " (tsStr $r.GetLte) "]" }}
+							err := {{ err . "值必须在范围内 [" (tsStr $r.GetGte) ", " (tsStr $r.GetLte) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if ts.Sub(lte) > 0 && ts.Sub(gte) < 0 {
-							err := {{ err . "value must be outside range (" (tsStr $r.GetLte) ", " (tsStr $r.GetGte) ")" }}
+							err := {{ err . "值必须超出范围 (" (tsStr $r.GetLte) ", " (tsStr $r.GetGte) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ end }}
 				{{ else }}
 					if ts.Sub(lte) > 0 {
-						err := {{ err . "value must be less than or equal to " (tsStr $r.GetLte) }}
+						err := {{ err . "值必须小于 or equal to " (tsStr $r.GetLte) }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
 				{{ end }}
 			{{ else if $r.Gt }}
 				if ts.Sub(gt) <= 0 {
-					err := {{ err . "value must be greater than " (tsStr $r.GetGt) }}
+					err := {{ err . "值必须大于 " (tsStr $r.GetGt) }}
 					if !all { return err }
 					errors = append(errors, err)
 				}
 			{{ else if $r.Gte }}
 				if ts.Sub(gte) < 0 {
-					err := {{ err . "value must be greater than or equal to " (tsStr $r.GetGte) }}
+					err := {{ err . "值必须大于 or equal to " (tsStr $r.GetGte) }}
 					if !all { return err }
 					errors = append(errors, err)
 				}
 			{{ else if $r.LtNow }}
 				{{ if $r.Within }}
 					if ts.Sub(now) >= 0 || ts.Sub(now.Add(-within)) < 0 {
-						err := {{ err . "value must be less than now within " (durStr $r.GetWithin) }}
+						err := {{ err . "值必须小于 now within " (durStr $r.GetWithin) }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
 				{{ else }}
 					if ts.Sub(now) >= 0 {
-						err := {{ err . "value must be less than now" }}
+						err := {{ err . "值必须小于 now" }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
@@ -117,13 +117,13 @@ const timestampcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 			{{ else if $r.GtNow }}
 				{{ if $r.Within }}
 					if ts.Sub(now) <= 0 || ts.Sub(now.Add(within)) > 0 {
-						err := {{ err . "value must be greater than now within " (durStr $r.GetWithin) }}
+						err := {{ err . "值必须大于 now within " (durStr $r.GetWithin) }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
 				{{ else }}
 					if ts.Sub(now) <= 0 {
-						err := {{ err . "value must be greater than now" }}
+						err := {{ err . "值必须大于 now" }}
 						if !all { return err }
 						errors = append(errors, err)
 					}

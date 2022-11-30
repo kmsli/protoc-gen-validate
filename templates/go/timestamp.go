@@ -7,7 +7,7 @@ const timestampTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 		if t := {{ accessor . }}; t != nil {
 			ts, err := t.AsTime(), t.CheckValid()
 			if err != nil {
-				err = {{ errCause . "err" "value is not a valid timestamp" }}
+				err = {{ errCause . "err" "值不是有效的时间戳" }}
 				if !all { return err }
 				errors = append(errors, err)
 			} else {

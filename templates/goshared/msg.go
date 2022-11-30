@@ -3,18 +3,18 @@ package goshared
 const msgTpl = `
 {{ if not (ignored .) -}}
 {{ if disabled . -}}
-	{{ cmt "Validate is disabled for " (msgTyp .) ". This method will always return nil." }}
+	{{ cmt (msgTyp .) "的单字段验证(Validate)已禁用。此方法将始终返回nil" }}
 {{- else -}}
-	{{ cmt "Validate checks the field values on " (msgTyp .) " with the rules defined in the proto definition for this message. If any rules are violated, the first error encountered is returned, or nil if there are no violations." }}
+	{{ cmt "单字段(Validate)检查 " (msgTyp .) "上具有此消息的原型定义中定义规则的字段值。 如果违反了任何规则，则返回遇到的第一个错误，如果没有违反，则返回零。" }}
 {{- end -}}
 func (m {{ (msgTyp .).Pointer }}) Validate() error {
 	return m.validate(false)
 }
 
 {{ if disabled . -}}
-	{{ cmt "ValidateAll is disabled for " (msgTyp .) ". This method will always return nil." }}
+	{{ cmt (msgTyp .) "的全字段验证(ValidateAll)已禁用。此方法将始终返回nil" }}
 {{- else -}}
-	{{ cmt "ValidateAll checks the field values on " (msgTyp .) " with the rules defined in the proto definition for this message. If any rules are violated, the result is a list of violation errors wrapped in " (multierrname .) ", or nil if none found." }}
+	{{ cmt "全字段(ValidateAll)检查" (msgTyp .) " 上具有此消息的原型定义中定义规则的字段值。 如果违反了任何规则, 结果是一个包含在 " (multierrname .) ", 中的违规错误列表，如果未找到，则为零。" }}
 {{- end -}}
 func (m {{ (msgTyp .).Pointer }}) ValidateAll() error {
 	return m.validate(true)
@@ -45,7 +45,7 @@ func (m {{ (msgTyp .).Pointer }}) validate(all bool) error {
 						if v == nil {
 							err := {{ errname .Message }}{
 								field: "{{ name $oneof }}",
-								reason: "oneof value cannot be a typed-nil",
+								reason: "oneof值不能是空类型",
 							}
 							if !all { return err }
 							errors = append(errors, err)
@@ -90,7 +90,7 @@ func (m {{ (msgTyp .).Pointer }}) validate(all bool) error {
 
 {{ if needs . "uuid" }}{{ template "uuid" . }}{{ end }}
 
-{{ cmt (multierrname .) " is an error wrapping multiple validation errors returned by " (msgTyp .) ".ValidateAll() if the designated constraints aren't met." -}}
+{{ cmt (multierrname .) " 是一个包含多个验证问题的错误， 如果不满足指定的约束条件，被类型 " (msgTyp .) ".ValidateAll() 返回。" -}}
 type {{ multierrname . }} []error
 
 // Error returns a concatenation of all the error messages it wraps.
@@ -105,7 +105,7 @@ func (m {{ multierrname . }}) Error() string {
 // AllErrors returns a list of validation violation errors.
 func (m {{ multierrname . }}) AllErrors() []error { return m }
 
-{{ cmt (errname .) " is the validation error returned by " (msgTyp .) ".Validate if the designated constraints aren't met." -}}
+{{ cmt (errname .) " 是一个验证错误，如果不满足指定的约束条件，被类型 " (msgTyp .) ".Validate()返回" -}}
 type {{ errname . }} struct {
 	field  string
 	reason string

@@ -10,26 +10,26 @@ const mapTpl = `
 	{{ if $r.GetMinPairs }}
 		{{ if eq $r.GetMinPairs $r.GetMaxPairs }}
 			if len({{ accessor . }}) != {{ $r.GetMinPairs }} {
-				err := {{ err . "value must contain exactly " $r.GetMinPairs " pair(s)" }}
+				err := {{ err . "值必须正好包含 " $r.GetMinPairs " 键值对" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ else if $r.MaxPairs }}
 			if l := len({{ accessor . }}); l < {{ $r.GetMinPairs }} || l > {{ $r.GetMaxPairs }} {
-				err := {{ err . "value must contain between " $r.GetMinPairs " and " $r.GetMaxPairs " pairs, inclusive" }}
+				err := {{ err . "值必须包含在 " $r.GetMinPairs " 和 " $r.GetMaxPairs " 键值对之间" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ else }}
 			if len({{ accessor . }}) < {{ $r.GetMinPairs }} {
-				err := {{ err . "value must contain at least " $r.GetMinPairs " pair(s)" }}
+				err := {{ err . "值必须至少包含 " $r.GetMinPairs " 键值对" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ end }}
 	{{ else if $r.MaxPairs }}
 		if len({{ accessor . }}) > {{ $r.GetMaxPairs }} {
-			err := {{ err . "value must contain no more than " $r.GetMaxPairs " pair(s)" }}
+			err := {{ err . "值不能超过 " $r.GetMaxPairs " 键值对" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
@@ -51,7 +51,7 @@ const mapTpl = `
 
 				{{ if $r.GetNoSparse }}
 					if val == nil {
-						err := {{ errIdx . "key" "value cannot be sparse, all pairs must be non-nil" }}
+						err := {{ errIdx . "键" "值不能是稀疏的, 所有键值对不能为空值" }}
 						if !all { return err }
 						errors = append(errors, err)
 					}

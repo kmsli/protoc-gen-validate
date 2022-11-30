@@ -13,12 +13,12 @@ const strTpl = `
 	{{ if or $r.Len (and $r.MinLen $r.MaxLen (eq $r.GetMinLen $r.GetMaxLen)) }}
 		{{ if $r.Len }}
 		if utf8.RuneCountInString({{ accessor . }}) != {{ $r.GetLen }} {
-			err := {{ err . "value length must be " $r.GetLen " runes" }}
+			err := {{ err . "值长度必须为 " $r.GetLen " runes" }}
 			if !all { return err }
 			errors = append(errors, err)
 		{{ else }}
 		if utf8.RuneCountInString({{ accessor . }}) != {{ $r.GetMinLen }} {
-			err := {{ err . "value length must be " $r.GetMinLen " runes" }}
+			err := {{ err . "值长度必须为 " $r.GetMinLen " runes" }}
 			if !all { return err }
 			errors = append(errors, err)
 		{{ end }}
@@ -26,20 +26,20 @@ const strTpl = `
 	{{ else if $r.MinLen }}
 		{{ if $r.MaxLen }}
 			if l := utf8.RuneCountInString({{ accessor . }}); l < {{ $r.GetMinLen }} || l > {{ $r.GetMaxLen }} {
-				err := {{ err . "value length must be between " $r.GetMinLen " and " $r.GetMaxLen " runes, inclusive" }}
+				err := {{ err . "值长度必须为 between " $r.GetMinLen " and " $r.GetMaxLen " runes, inclusive" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ else }}
 			if utf8.RuneCountInString({{ accessor . }}) < {{ $r.GetMinLen }} {
-				err := {{ err . "value length must be at least " $r.GetMinLen " runes" }}
+				err := {{ err . "值长度必须为 at least " $r.GetMinLen " runes" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ end }}
 	{{ else if $r.MaxLen }}
 		if utf8.RuneCountInString({{ accessor . }}) > {{ $r.GetMaxLen }} {
-			err := {{ err . "value length must be at most " $r.GetMaxLen " runes" }}
+			err := {{ err . "值长度必须为 at most " $r.GetMaxLen " runes" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
@@ -48,13 +48,13 @@ const strTpl = `
 	{{ if or $r.LenBytes (and $r.MinBytes $r.MaxBytes (eq $r.GetMinBytes $r.GetMaxBytes)) }}
 		{{ if $r.LenBytes }}
 			if len({{ accessor . }}) != {{ $r.GetLenBytes }} {
-				err := {{ err . "value length must be " $r.GetLenBytes " bytes" }}
+				err := {{ err . "值长度必须为 " $r.GetLenBytes " bytes" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ else }}
 			if len({{ accessor . }}) != {{ $r.GetMinBytes }} {
-				err := {{ err . "value length must be " $r.GetMinBytes " bytes" }}
+				err := {{ err . "值长度必须为 " $r.GetMinBytes " bytes" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
@@ -62,20 +62,20 @@ const strTpl = `
 	{{ else if $r.MinBytes }}
 		{{ if $r.MaxBytes }}
 			if l := len({{ accessor . }}); l < {{ $r.GetMinBytes }} || l > {{ $r.GetMaxBytes }} {
-					err := {{ err . "value length must be between " $r.GetMinBytes " and " $r.GetMaxBytes " bytes, inclusive" }}
+					err := {{ err . "值长度必须为 between " $r.GetMinBytes " and " $r.GetMaxBytes " bytes, inclusive" }}
 					if !all { return err }
 					errors = append(errors, err)
 			}
 		{{ else }}
 			if len({{ accessor . }}) < {{ $r.GetMinBytes }} {
-				err := {{ err . "value length must be at least " $r.GetMinBytes " bytes" }}
+				err := {{ err . "值长度必须为 at least " $r.GetMinBytes " bytes" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ end }}
 	{{ else if $r.MaxBytes }}
 		if len({{ accessor . }}) > {{ $r.GetMaxBytes }} {
-			err := {{ err . "value length must be at most " $r.GetMaxBytes " bytes" }}
+			err := {{ err . "值长度必须为 at most " $r.GetMaxBytes " bytes" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}

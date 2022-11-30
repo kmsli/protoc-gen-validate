@@ -5,25 +5,25 @@ const hostTpl = `
 		s := strings.ToLower(strings.TrimSuffix(host, "."))
 
 		if len(host) > 253 {
-			return errors.New("hostname cannot exceed 253 characters")
+			return errors.New("主机名不能超过253个字符")
 		}
 
 		for _, part := range strings.Split(s, ".") {
 			if l := len(part); l == 0 || l > 63 {
-				return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+				return errors.New("主机名部分必须为非空且不能超过63个字符")
 			}
 
 			if part[0] == '-' {
-				return errors.New("hostname parts cannot begin with hyphens")
+				return errors.New("主机名部分不能以连字符开头")
 			}
 
 			if part[len(part)-1] == '-' {
-				return errors.New("hostname parts cannot end with hyphens")
+				return errors.New("主机名部分不能以连字符结尾")
 			}
 
 			for _, r := range part {
 				if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
-					return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+					return fmt.Errorf("主机名部分只能包含字母数字字符或连字符, 取值 %q", string(r))
 				}
 			}
 		}

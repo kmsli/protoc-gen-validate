@@ -19,13 +19,13 @@ const durationcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ if $r.Gt }}
 					{{  if durGt $r.GetLt $r.GetGt }}
 						if dur <= gt || dur >= lt {
-							err := {{ err . "value must be inside range (" (durStr $r.GetGt) ", " (durStr $r.GetLt) ")" }}
+							err := {{ err . "值必须在范围内 (" (durStr $r.GetGt) ", " (durStr $r.GetLt) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if dur >= lt && dur <= gt {
-							err := {{ err . "value must be outside range [" (durStr $r.GetLt) ", " (durStr $r.GetGt) "]" }}
+							err := {{ err . "值必须超出范围 [" (durStr $r.GetLt) ", " (durStr $r.GetGt) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
@@ -33,20 +33,20 @@ const durationcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ else if $r.Gte }}
 					{{  if durGt $r.GetLt $r.GetGte }}
 						if dur < gte || dur >= lt {
-							err := {{ err . "value must be inside range [" (durStr $r.GetGte) ", " (durStr $r.GetLt) ")" }}
+							err := {{ err . "值必须在范围内 [" (durStr $r.GetGte) ", " (durStr $r.GetLt) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if dur >= lt && dur < gte {
-							err := {{ err . "value must be outside range [" (durStr $r.GetLt) ", " (durStr $r.GetGte) ")" }}
+							err := {{ err . "值必须超出范围 [" (durStr $r.GetLt) ", " (durStr $r.GetGte) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ end }}
 				{{ else }}
 					if dur >= lt {
-						err := {{ err . "value must be less than " (durStr $r.GetLt) }}
+						err := {{ err . "值必须小于 " (durStr $r.GetLt) }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
@@ -55,13 +55,13 @@ const durationcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ if $r.Gt }}
 					{{  if durGt $r.GetLte $r.GetGt }}
 						if dur <= gt || dur > lte {
-							err := {{ err . "value must be inside range (" (durStr $r.GetGt) ", " (durStr $r.GetLte) "]" }}
+							err := {{ err . "值必须在范围内 (" (durStr $r.GetGt) ", " (durStr $r.GetLte) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if dur > lte && dur <= gt {
-							err := {{ err . "value must be outside range (" (durStr $r.GetLte) ", " (durStr $r.GetGt) "]" }}
+							err := {{ err . "值必须超出范围 (" (durStr $r.GetLte) ", " (durStr $r.GetGt) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
@@ -69,33 +69,33 @@ const durationcmpTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 				{{ else if $r.Gte }}
 					{{ if durGt $r.GetLte $r.GetGte }}
 						if dur < gte || dur > lte {
-							err := {{ err . "value must be inside range [" (durStr $r.GetGte) ", " (durStr $r.GetLte) "]" }}
+							err := {{ err . "值必须在范围内 [" (durStr $r.GetGte) ", " (durStr $r.GetLte) "]" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ else }}
 						if dur > lte && dur < gte {
-							err := {{ err . "value must be outside range (" (durStr $r.GetLte) ", " (durStr $r.GetGte) ")" }}
+							err := {{ err . "值必须超出范围 (" (durStr $r.GetLte) ", " (durStr $r.GetGte) ")" }}
 							if !all { return err }
 							errors = append(errors, err)
 						}
 					{{ end }}
 				{{ else }}
 					if dur > lte {
-						err := {{ err . "value must be less than or equal to " (durStr $r.GetLte) }}
+						err := {{ err . "值必须小于 or equal to " (durStr $r.GetLte) }}
 						if !all { return err }
 						errors = append(errors, err)
 					}
 				{{ end }}
 			{{ else if $r.Gt }}
 				if dur <= gt {
-					err := {{ err . "value must be greater than " (durStr $r.GetGt) }}
+					err := {{ err . "值必须大于 " (durStr $r.GetGt) }}
 					if !all { return err }
 					errors = append(errors, err)
 				}
 			{{ else if $r.Gte }}
 				if dur < gte {
-					err := {{ err . "value must be greater than or equal to " (durStr $r.GetGte) }}
+					err := {{ err . "值必须大于 or equal to " (durStr $r.GetGte) }}
 					if !all { return err }
 					errors = append(errors, err)
 				}

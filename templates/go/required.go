@@ -3,7 +3,7 @@ package golang
 const requiredTpl = `
 	{{ if .Rules.GetRequired }}
 		if {{ accessor . }} == nil {
-			err := {{ err . "value is required" }}
+			err := {{ err . "值是必需的" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}

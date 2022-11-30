@@ -6,13 +6,13 @@ const anyTpl = `{{ $f := .Field }}{{ $r := .Rules }}
 	if a := {{ accessor . }}; a != nil {
 		{{ if $r.In }}
 			if _, ok := {{ lookup $f "InLookup" }}[a.GetTypeUrl()]; !ok {
-				err := {{ err . "type URL must be in list " $r.In }}
+				err := {{ err . "类型 URL 必须在列表中 " $r.In }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ else if $r.NotIn }}
 			if _, ok := {{ lookup $f "NotInLookup" }}[a.GetTypeUrl()]; ok {
-				err := {{ err . "type URL must not be in list " $r.NotIn }}
+				err := {{ err . "类型 URL 不能在列表中 " $r.NotIn }}
 				if !all { return err }
 				errors = append(errors, err)
 			}

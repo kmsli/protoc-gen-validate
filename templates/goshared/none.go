@@ -1,5 +1,5 @@
 package goshared
 
-const noneTpl = `// no validation rules for {{ name .Field }}
+const noneTpl = `// {{ name .Field }} 字段没有验证规则
 	{{- if .Index }}[{{ .Index }}]{{ end }}
 	{{- if .OnKey }} (key){{ end }}`

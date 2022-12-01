@@ -13,12 +13,12 @@ const strTpl = `
 	{{ if or $r.Len (and $r.MinLen $r.MaxLen (eq $r.GetMinLen $r.GetMaxLen)) }}
 		{{ if $r.Len }}
 		if utf8.RuneCountInString({{ accessor . }}) != {{ $r.GetLen }} {
-			err := {{ err . "值长度必须为 " $r.GetLen " runes" }}
+			err := {{ err . "值长度必须有 " $r.GetLen " 个字符" }}
 			if !all { return err }
 			errors = append(errors, err)
 		{{ else }}
 		if utf8.RuneCountInString({{ accessor . }}) != {{ $r.GetMinLen }} {
-			err := {{ err . "值长度必须为 " $r.GetMinLen " runes" }}
+			err := {{ err . "值长度最少有 " $r.GetMinLen " 个字符" }}
 			if !all { return err }
 			errors = append(errors, err)
 		{{ end }}
@@ -26,20 +26,20 @@ const strTpl = `
 	{{ else if $r.MinLen }}
 		{{ if $r.MaxLen }}
 			if l := utf8.RuneCountInString({{ accessor . }}); l < {{ $r.GetMinLen }} || l > {{ $r.GetMaxLen }} {
-				err := {{ err . "值长度必须为 between " $r.GetMinLen " and " $r.GetMaxLen " runes, inclusive" }}
+				err := {{ err . "值长度必须在 " $r.GetMinLen " 和 " $r.GetMaxLen " 个字符之间, 包括" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ else }}
 			if utf8.RuneCountInString({{ accessor . }}) < {{ $r.GetMinLen }} {
-				err := {{ err . "值长度必须为 at least " $r.GetMinLen " runes" }}
+				err := {{ err . "值长度最少 " $r.GetMinLen " 个字符" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ end }}
 	{{ else if $r.MaxLen }}
 		if utf8.RuneCountInString({{ accessor . }}) > {{ $r.GetMaxLen }} {
-			err := {{ err . "值长度必须为 at most " $r.GetMaxLen " runes" }}
+			err := {{ err . "值长度最多 " $r.GetMaxLen " 个字符" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
@@ -48,13 +48,13 @@ const strTpl = `
 	{{ if or $r.LenBytes (and $r.MinBytes $r.MaxBytes (eq $r.GetMinBytes $r.GetMaxBytes)) }}
 		{{ if $r.LenBytes }}
 			if len({{ accessor . }}) != {{ $r.GetLenBytes }} {
-				err := {{ err . "值长度必须为 " $r.GetLenBytes " bytes" }}
+				err := {{ err . "值长度必须为 " $r.GetLenBytes " 个字节" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ else }}
 			if len({{ accessor . }}) != {{ $r.GetMinBytes }} {
-				err := {{ err . "值长度必须为 " $r.GetMinBytes " bytes" }}
+				err := {{ err . "值长度必须为 " $r.GetMinBytes " 个字节" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
@@ -62,20 +62,20 @@ const strTpl = `
 	{{ else if $r.MinBytes }}
 		{{ if $r.MaxBytes }}
 			if l := len({{ accessor . }}); l < {{ $r.GetMinBytes }} || l > {{ $r.GetMaxBytes }} {
-					err := {{ err . "值长度必须为 between " $r.GetMinBytes " and " $r.GetMaxBytes " bytes, inclusive" }}
+					err := {{ err . "值长度必须在 " $r.GetMinBytes " 和 " $r.GetMaxBytes " 字节之间, 包括" }}
 					if !all { return err }
 					errors = append(errors, err)
 			}
 		{{ else }}
 			if len({{ accessor . }}) < {{ $r.GetMinBytes }} {
-				err := {{ err . "值长度必须为 at least " $r.GetMinBytes " bytes" }}
+				err := {{ err . "值长度最少 " $r.GetMinBytes " 个字节" }}
 				if !all { return err }
 				errors = append(errors, err)
 			}
 		{{ end }}
 	{{ else if $r.MaxBytes }}
 		if len({{ accessor . }}) > {{ $r.GetMaxBytes }} {
-			err := {{ err . "值长度必须为 at most " $r.GetMaxBytes " bytes" }}
+			err := {{ err . "值长度最多 " $r.GetMaxBytes " 个字节" }}
 			if !all { return err }
 			errors = append(errors, err)
 		}
